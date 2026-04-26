@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Socorro's Lanches - O Sabor que Salva seu Dia!</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  :root {
+    --primary: #FF6B00;
+    --secondary: #FFC700;
+    --accent: #E63946;
+    --bg-light: #FFF9F5;
+    --bg-dark: #1A1A1A;
+    --text-light: #2D2D2D;
+    --text-dark: #F5F5F5;
+    --card-light: #FFFFFF;
+    --card-dark: #262626;
+  }
+
+  * {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .light {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+  }
+
+  .dark {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-bg {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  }
+
+  .gradient-bg-secondary {
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+  }
+
+  .card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-hover:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(255, 107, 0, 0.2);
+  }
+
+  .light .card-bg {
+    background-color: var(--card-light);
+  }
+
+  .dark .card-bg {
+    background-color: var(--card-dark);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 107, 0, 0.4);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .glass-effect {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .light .glass-effect {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .dark .glass-effect {
+    background: rgba(38, 38, 38, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .cart-badge {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .7; }
+  }
+
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+  }
+
+  .scroll-reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .category-btn.active {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+  }
+
+  #cartSidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #cartSidebar::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 3px;
+  }
+
+  .carousel-container {
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .carousel-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-item {
+    scroll-snap-align: start;
+  }
+</style>
+</head>
+<body class="light">
+  <!-- Header -->
+  <header class="fixed top-0 w-full z-50 glass-effect shadow-lg">
+    <nav class="container mx-auto px-4 py-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="w-12 h-12 gradient-bg rounded-2xl flex items-center justify-center shadow-lg">
+            <i data-lucide="beef" class="w-7 h-7 text-white"></i>
+          </div>
+          <div>
+            <h1 class="text-2xl font-black gradient-text">Socorro's Lanches</h1>
+            <p class="text-xs opacity-70">O sabor que salva</p>
+          </div>
+        </div>
+
+        <div class="hidden lg:flex items-center gap-8">
+          <a href="#inicio" class="font-semibold hover:text-[#FF6B00] transition-colors">Início</a>
+          <a href="#cardapio" class="font-semibold hover:text-[#FF6B00] transition-colors">Cardápio</a>
+          <a href="#destaques" class="font-semibold hover:text-[#FF6B00] transition-colors">Destaques</a>
+          <a href="#sobre" class="font-semibold hover:text-[#FF6B00] transition-colors">Sobre</a>
+          <a href="#contato" class="font-semibold hover:text-[#FF6B00] transition-colors">Contato</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button id="themeToggle" class="p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <i data-lucide="moon" class="w-5 h-5 light-icon"></i>
+            <i data-lucide="sun" class="w-5 h-5 dark-icon hidden"></i>
+          </button>
+          
+          <button id="cartBtn" class="relative p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+            <span id="cartCount" class="cart-badge absolute -top-1 -right-1 w-5 h-5 bg-[#E63946] text-white text-xs font-bold rounded-full flex items-center justify-center hidden">0</span>
+          </button>
+
+          <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-4 space-y-3">
+        <a href="#inicio" class="block py-2 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Início</a>
+        <a href="#cardapio" class="block py-2 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Cardápio</a>
+        <a href="#destaques" class="block py-2 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Destaques</a>
+        <a href="#sobre" class="block py-2 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Sobre</a>
+        <a href="#contato" class="block py-2 px-4 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">Contato</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="inicio" class="pt-32 pb-20 px-4">
+    <div class="container mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-8 animate-fadeInUp">
+          <!-- Promo Timer -->
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#FFC700]/20 to-[#FF6B00]/20 border border-[#FF6B00]/30">
+            <i data-lucide="zap" class="w-4 h-4 text-[#FF6B00]"></i>
+            <span class="text-sm font-semibold">Promo Relâmpago termina em: </span>
+            <span id="promoTimer" class="font-black text-[#E63946]">23:59:59</span>
+          </div>
+
+          <h2 class="text-5xl md:text-7xl font-black leading-tight">
+            O <span class="gradient-text">melhor lanche</span> da cidade chegou!
+          </h2>
+          
+          <p class="text-lg opacity-80">
+            Hambúrgueres artesanais, salgados fresquinhos e aquele sabor que vai te salvar da fome. Delivery rápido e ingredientes selecionados todo dia.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <a href="#cardapio" class="btn-primary px-8 py-4 rounded-2xl text-white font-bold text-lg flex items-center gap-2">
+              <i data-lucide="utensils" class="w-5 h-5"></i>
+              Fazer Pedido
+            </a>
+            <a href="#destaques" class="px-8 py-4 rounded-2xl font-bold text-lg border-2 border-[#FF6B00] text-[#FF6B00] hover:bg-[#FF6B00] hover:text-white transition-all flex items-center gap-2">
+              <i data-lucide="star" class="w-5 h-5"></i>
+              Ver Destaques
+            </a>
+          </div>
+
+          <div class="flex items-center gap-8 pt-4">
+            <div>
+              <div class="text-3xl font-black gradient-text">4.9★</div>
+              <div class="text-sm opacity-70">+2mil avaliações</div>
+            </div>
+            <div>
+              <div class="text-3xl font-black gradient-text">30min</div>
+              <div class="text-sm opacity-70">Entrega média</div>
+            </div>
+            <div>
+              <div class="text-3xl font-black gradient-text">100%</div>
+              <div class="text-sm opacity-70">Satisfação</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="animate-float">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80" alt="Hambúrguer Artesanal" class="w-full rounded-3xl shadow-2xl">
+          </div>
+          <div class="absolute -bottom-6 -left-6 card-bg p-6 rounded-2xl shadow-xl">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 gradient-bg-secondary rounded-xl flex items-center justify-center">
+                <i data-lucide="truck" class="w-6 h-6 text-white"></i>
+              </div>
+              <div>
+                <div class="font-bold">Delivery Grátis</div>
+                <div class="text-sm opacity-70">Acima de R$ 40</div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute -top-6 -right-6 card-bg p-6 rounded-2xl shadow-xl">
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center">
+                <i data-lucide="flame" class="w-6 h-6 text-white"></i>
+              </div>
+              <div>
+                <div class="font-bold">Mais Pedido</div>
+                <div class="text-sm opacity-70">X-Socorro Duplo</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Destaques do Dia -->
+  <section id="destaques" class="py-20 px-4">
+    <div class="container mx-auto">
+      <div class="text-center mb-12 scroll-reveal">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FF6B00]/10 text-[#FF6B00] font-semibold mb-4">
+          <i data-lucide="flame" class="w-4 h-4"></i>
+          Quentes na hora
+        </div>
+        <h3 class="text-4xl md:text-5xl font-black mb-4">Destaques do <span class="gradient-text">Dia</span></h3>
+        <p class="text-lg opacity-70">Os queridinhos que nossos clientes mais amam</p>
+      </div>
+
+      <div class="relative">
+        <div id="carousel" class="carousel-container flex gap-6 overflow-x-auto pb-6">
+          <!-- Items serão inseridos via JS -->
+        </div>
+        <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all">
+          <i data-lucide="chevron-left" class="w-6 h-6"></i>
+        </button>
+        <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all">
+          <i data-lucide="chevron-right" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cardápio -->
+  <section id="cardapio" class="py-20 px-4">
+    <div class="container mx-auto">
+      <div class="text-center mb-12 scroll-reveal">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FF6B00]/10 text-[#FF6B00] font-semibold mb-4">
+          <i data-lucide="book-open" class="w-4 h-4"></i>
+          Cardápio Completo
+        </div>
+        <h3 class="text-4xl md:text-5xl font-black mb-4">Escolha seu <span class="gradient-text">Favorito</span></h3>
+        <p class="text-lg opacity-70">Tudo feito com ingredientes frescos e muito amor</p>
+      </div>
+
+      <!-- Search & Filter -->
+      <div class="mb-8 space-y-4">
+        <div class="relative max-w-xl mx-auto">
+          <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 opacity-50"></i>
+          <input type="text" id="searchInput" placeholder="Buscar lanche, salgado, bebida..." class="w-full pl-12 pr-4 py-4 rounded-2xl card-bg shadow-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B00] transition-all">
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-3">
+          <button class="category-btn active px-6 py-3 rounded-xl font-semibold transition-all" data-category="todos">
+            <i data-lucide="grid" class="w-4 h-4 inline mr-2"></i>Todos
+          </button>
+          <button class="category-btn px-6 py-3 rounded-xl font-semibold card-bg hover:shadow-lg transition-all" data-category="hamburgueres">
+            <i data-lucide="beef" class="w-4 h-4 inline mr-2"></i>Hambúrgueres
+          </button>
+          <button class="category-btn px-6 py-3 rounded-xl font-semibold card-bg hover:shadow-lg transition-all" data-category="salgados">
+            <i data-lucide="croissant" class="w-4 h-4 inline mr-2"></i>Salgados
+          </button>
+          <button class="category-btn px-6 py-3 rounded-xl font-semibold card-bg hover:shadow-lg transition-all" data-category="bebidas">
+            <i data-lucide="cup-soda" class="w-4 h-4 inline mr-2"></i>Bebidas
+          </button>
+          <button class="category-btn px-6 py-3 rounded-xl font-semibold card-bg hover:shadow-lg transition-all" data-category="sobremesas">
+            <i data-lucide="ice-cream" class="w-4 h-4 inline mr-2"></i>Sobremesas
+          </button>
+        </div>
+      </div>
+
+      <!-- Menu Grid -->
+      <div id="menuGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Items serão inseridos via JS -->
+      </div>
+
+      <div id="noResults" class="hidden text-center py-12">
+        <i data-lucide="search-x" class="w-16 h-16 mx-auto opacity-30 mb-4"></i>
+        <p class="text-xl opacity-70">Nenhum item encontrado</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre -->
+  <section id="sobre" class="py-20 px-4">
+    <div class="container mx-auto">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="scroll-reveal">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FF6B00]/10 text-[#FF6B00] font-semibold mb-4">
+            <i data-lucide="heart" class="w-4 h-4"></i>
+            Nossa História
+          </div>
+          <h3 class="text-4xl md:text-5xl font-black mb-6">Mais que um lanche, <span class="gradient-text">uma paixão</span></h3>
+          <p class="text-lg opacity-80 mb-6">
+            A Socorro's Lanches nasceu em 1996 com um sonho: salvar todo mundo daquela fome repentina com lanches incríveis. Começamos pequenos, mas com um sabor gigante.
+          </p>
+          <p class="text-lg opacity-80 mb-8">
+            Hoje somos referência na cidade, com ingredientes selecionados, receitas exclusivas e aquele atendimento que te faz sentir em casa. Porque aqui, cada cliente é família.
+          </p>
+          
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div class="card-bg p-6 rounded-2xl shadow-lg">
+              <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center mb-4">
+                <i data-lucide="award" class="w-6 h-6 text-white"></i>
+              </div>
+              <h4 class="font-bold text-lg mb-2">Qualidade Premium</h4>
+              <p class="text-sm opacity-70">Ingredientes frescos todos os dias</p>
+            </div>
+            <div class="card-bg p-6 rounded-2xl shadow-lg">
+              <div class="w-12 h-12 gradient-bg-secondary rounded-xl flex items-center justify-center mb-4">
+                <i data-lucide="timer" class="w-6 h-6 text-white"></i>
+              </div>
+              <h4 class="font-bold text-lg mb-2">Entrega Rápida</h4>
+              <p class="text-sm opacity-70">Seu pedido quentinho em 30min</p>
+            </div>
+            <div class="card-bg p-6 rounded-2xl shadow-lg">
+              <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center mb-4">
+                <i data-lucide="chef-hat" class="w-6 h-6 text-white"></i>
+              </div>
+              <h4 class="font-bold text-lg mb-2">Receitas Únicas</h4>
+              <p class="text-sm opacity-70">Criações exclusivas da casa</p>
+            </div>
+            <div class="card-bg p-6 rounded-2xl shadow-lg">
+              <div class="w-12 h-12 gradient-bg-secondary rounded-xl flex items-center justify-center mb-4">
+                <i data-lucide="smile" class="w-6 h-6 text-white"></i>
+              </div>
+              <h4 class="font-bold text-lg mb-2">Atendimento Top</h4>
+              <p class="text-sm opacity-70">Equipe treinada pra te atender bem</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative scroll-reveal">
+          <img src="frente-lanche.jpg" alt="Cozinha Socorro Lanches" class="rounded-3xl shadow-2xl">
+          <div class="absolute -bottom-6 -right-6 card-bg p-8 rounded-2xl shadow-2xl w-full">
+            <div class="text-center">
+              <div class="text-5xl font-black gradient-text mb-2">9+</div>
+              <div class="font-semibold">Anos de História</div>
+              <div class="text-sm opacity-70">Salvando sua fome</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section id="contato" class="py-20 px-4">
+    <div class="container mx-auto">
+      <div class="text-center mb-12 scroll-reveal">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FF6B00]/10 text-[#FF6B00] font-semibold mb-4">
+          <i data-lucide="map-pin" class="w-4 h-4"></i>
+          Onde Estamos
+        </div>
+        <h3 class="text-4xl md:text-5xl font-black mb-4">Vem nos <span class="gradient-text">Visitar</span></h3>
+        <p class="text-lg opacity-70">Ou peça pelo delivery e receba em casa</p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8">
+        <div class="card-bg rounded-3xl overflow-hidden shadow-xl scroll-reveal">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3675.356219020248!2d-43.18083968503457!3d-22.906847085011796!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDU0JzI0LjYiUyA0M8KwMTAnNDAuMCJX!5e0!3m2!1spt-BR!2sbr!4v1234567890" 
+            width="100%" 
+            height="400" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy">
+          </iframe>
+        </div>
+
+        <div class="space-y-6 scroll-reveal">
+          <div class="card-bg p-8 rounded-3xl shadow-xl">
+            <h4 class="text-2xl font-black mb-6">Informações</h4>
+            
+            <div class="space-y-6">
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                  <div class="font-bold mb-1">Endereço</div>
+                  <div class="opacity-70">R. Marquesa de Santos, 395 - Coroado, Manaus - AM, 69080-000</div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 gradient-bg-secondary rounded-xl flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="clock" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                  <div class="font-bold mb-1">Horário de Funcionamento</div>
+                  <div class="opacity-70">
+                    Seg à Sex: 11h às 23h<br>
+                    Sáb e Dom: 12h às 00h
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-4">
+                <div class="w-12 h-12 gradient-bg rounded-xl flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="phone" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                  <div class="font-bold mb-1">Telefone</div>
+                  <div class="opacity-70">(11) 99999-9999</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex gap-3 mt-8">
+              <a href="https://wa.me/5511999999999" target="_blank" class="flex-1 btn-primary px-6 py-4 rounded-xl text-white font-bold text-center flex items-center justify-center gap-2">
+                <i data-lucide="message-circle" class="w-5 h-5"></i>
+                WhatsApp
+              </a>
+              <a href="https://instagram.com/socorrolanches" target="_blank" class="flex-1 px-6 py-4 rounded-xl font-bold text-center border-2 border-[#FF6B00] text-[#FF6B00] hover:bg-[#FF6B00] hover:text-white transition-all flex items-center justify-center gap-2">
+                <i data-lucide="instagram" class="w-5 h-5"></i>
+                Instagram
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#1A1A1A] text-white py-12 px-4">
+    <div class="container mx-auto">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
+              <i data-lucide="beef" class="w-6 h-6 text-white"></i>
+            </div>
+            <span class="text-xl font-black">Socorro's Lanches</span>
+          </div>
+          <p class="text-sm opacity-70">O sabor que salva seu dia desde 1996</p>
+        </div>
+
+        <div>
+          <h5 class="font-bold mb-4">Links Rápidos</h5>
+          <ul class="space-y-2 text-sm opacity-70">
+            <li><a href="#inicio" class="hover:opacity-100 transition-opacity">Início</a></li>
+            <li><a href="#cardapio" class="hover:opacity-100 transition-opacity">Cardápio</a></li>
+            <li><a href="#destaques" class="hover:opacity-100 transition-opacity">Destaques</a></li>
+            <li><a href="#sobre" class="hover:opacity-100 transition-opacity">Sobre</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="font-bold mb-4">Atendimento</h5>
+          <ul class="space-y-2 text-sm opacity-70">
+            <li>Seg à Sex: 11h às 23h</li>
+            <li>Sáb e Dom: 12h às 00h</li>
+            <li>(11) 99999-9999</li>
+            <li>contato@socorrolanches.com</li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="font-bold mb-4">Redes Sociais</h5>
+          <div class="flex gap-3">
+            <a href="https://wa.me/5511999999999" target="_blank" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#FF6B00] flex items-center justify-center transition-all">
+              <i data-lucide="message-circle" class="w-5 h-5"></i>
+            </a>
+            <a href="https://instagram.com/socorrolanches" target="_blank" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#FF6B00] flex items-center justify-center transition-all">
+              <i data-lucide="instagram" class="w-5 h-5"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-[#FF6B00] flex items-center justify-center transition-all">
+              <i data-lucide="facebook" class="w-5 h-5"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 pt-8 text-center text-sm opacity-70">
+        <p>&copy; 2024 Socorro's Lanches. Todos os direitos reservados. Feito com ❤️ e muito sabor.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Sidebar -->
+  <div id="cartOverlay" class="fixed inset-0 bg-black/50 z-50 hidden"></div>
+  <div id="cartSidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 card-bg shadow-2xl z-50 transform translate-x-full transition-transform duration-300 overflow-y-auto">
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h4 class="text-2xl font-black">Seu Carrinho</h4>
+        <button id="closeCart" class="p-2 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+      <div id="cartItems" class="space-y-4 mb-6">
+        <!-- Items serão inseridos via JS -->
+      </div>
+
+      <div id="emptyCart" class="text-center py-12">
+        <i data-lucide="shopping-bag" class="w-16 h-16 mx-auto opacity-30 mb-4"></i>
+        <p class="text-lg opacity-70">Seu carrinho está vazio</p>
+        <p class="text-sm opacity-50">Adicione itens do cardápio</p>
+      </div>
+
+      <div id="cartFooter" class="hidden border-t pt-6 space-y-4">
+        <div class="flex justify-between text-lg">
+          <span class="opacity-70">Subtotal</span>
+          <span class="font-bold" id="subtotal">R$ 0,00</span>
+        </div>
+        <div class="flex justify-between text-xl font-black">
+          <span>Total</span>
+          <span class="gradient-text" id="total">R$ 0,00</span>
+        </div>
+        <button id="checkoutBtn" class="w-full btn-primary px-6 py-4 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-2">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+          Finalizar no WhatsApp
+        </button>
+        <p class="text-xs text-center opacity-50">Frete grátis acima de R$ 40,00</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WhatsApp Float Button -->
+  <a href="https://wa.me/5511999999999" target="_blank" class="fixed bottom-6 right-6 w-16 h-16 gradient-bg rounded-full shadow-2xl flex items-center justify-center z-40 hover:scale-110 transition-transform">
+    <i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
+  </a>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-24 right-6 card-bg px-6 py-4 rounded-2xl shadow-2xl z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center">
+        <i data-lucide="check" class="w-5 h-5 text-white"></i>
+      </div>
+      <div>
+        <div class="font-bold">Adicionado!</div>
+        <div class="text-sm opacity-70" id="toastMessage">Item no carrinho</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // Dados do cardápio
+  const menuItems = [
+    {id: 1, name: "X-Socorro Duplo", category: "hamburgueres", price: 28.90, desc: "2 carnes artesanais, queijo cheddar, bacon crocante, alface, tomate e molho especial", img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500&q=80", destaque: true},
+    {id: 2, name: "X-Salada Completo", category: "hamburgueres", price: 22.90, desc: "Carne artesanal, queijo, alface americana, tomate, cebola roxa e maionese da casa", img: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&q=80", destaque: false},
+    {id: 3, name: "X-Bacon Explosão", category: "hamburgueres", price: 26.90, desc: "Carne 160g, muito bacon, queijo prato derretido e molho barbecue", img: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500&q=80", destaque: true},
+    {id: 4, name: "X-Veggie Supremo", category: "hamburgueres", price: 24.90, desc: "Burger vegetal, queijo, rúcula, tomate seco e maionese de ervas", img: "https://images.unsplash.com/photo-1520072959219-c595dc870360?w=500&q=80", destaque: false},
+    {id: 5, name: "X-Frango Crocante", category: "hamburgueres", price: 25.90, desc: "Filé de frango empanado, queijo, alface, tomate e molho honey mustard", img: "https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=500&q=80", destaque: false},
+   {
+  id: 6, 
+  name: "Coxinha Cremosa", 
+  category: "salgados", 
+  price: 8.90, 
+  desc: "Coxinha de frango com catupiry, massa fininha e super crocante", 
+  img: "coxinha-cremosa.jpg", 
+  destaque: false
+},
+    {id: 7, name: "Pastel de Queijo", category: "salgados", price: 9.90, desc: "Pastel gigante recheado com queijo mussarela derretido", img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=500&q=80", destaque: false},
+   {
+  id: 8, name: "Kibe Recheado",
+  category: "salgados",
+  price: 7.90,
+  desc: "Kibe tradicional recheado com cream cheese", 
+  img: "Kibe-recheado.jpg",
+  destaque: false
+},
+   {
+  id: 9, name: "Coca-Cola 350ml", 
+  category: "bebidas", 
+  price: 6.00, 
+  desc: "Lata gelada de Coca-Cola tradicional", 
+  img: "coca-cola.jpeg", 
+  destaque: false
+},
+    {id: 10, name: "Suco Natural 500ml", category: "bebidas", price: 9.90, desc: "Suco natural de laranja, acerola ou maracujá", img: "https://images.unsplash.com/photo-1544145945-f90425340c7e?w=500&q=80", destaque: true},
+    {id: 11, name: "Milkshake de Ovomaltine", category: "bebidas", price: 14.90, desc: "Milkshake cremoso com cobertura de Ovomaltine", img: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=500&q=80", destaque: true},
+   {
+  id: 12, 
+  name: "Brownie com Sorvete", 
+  category: "sobremesas", 
+  price: 16.90, 
+  desc: "Brownie quentinho com bola de sorvete e calda de chocolate", 
+  img: "brownie-sorvete.jpg", 
+  destaque: true
+},
+    {id: 13, name: "Pudim de Leite", category: "sobremesas", price: 8.90, desc: "Pudim cremoso com calda de caramelo", img: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=500&q=80", destaque: false},
+    {id: 14, name: "Açaí 500ml", category: "sobremesas", price: 18.90, desc: "Açaí premium com granola, leite condensado e frutas", img: "https://images.unsplash.com/photo-1590301157890-4810ed352733?w=500&q=80", destaque: true},
+  ];
+
+  // Estado
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  let currentCategory = 'todos';
+  let searchTerm = '';
+
+  // Elementos DOM
+  const menuGrid = document.getElementById('menuGrid');
+  const cartBtn = document.getElementById('cartBtn');
+  const cartSidebar = document.getElementById('cartSidebar');
+  const cartOverlay = document.getElementById('cartOverlay');
+  const closeCart = document.getElementById('closeCart');
+  const cartItems = document.getElementById('cartItems');
+  const cartCount = document.getElementById('cartCount');
+  const emptyCart = document.getElementById('emptyCart');
+  const cartFooter = document.getElementById('cartFooter');
+  const subtotal = document.getElementById('subtotal');
+  const total = document.getElementById('total');
+  const checkoutBtn = document.getElementById('checkoutBtn');
+  const searchInput = document.getElementById('searchInput');
+  const categoryBtns = document.querySelectorAll('.category-btn');
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const themeToggle = document.getElementById('themeToggle');
+  const toast = document.getElementById('toast');
+  const toastMessage = document.getElementById('toastMessage');
+  const carousel = document.getElementById('carousel');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const promoTimer = document.getElementById('promoTimer');
+
+  // Inicialização
+  document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+    renderMenu();
+    renderCarousel();
+    updateCartUI();
+    initScrollReveal();
+    initPromoTimer();
+    initTheme();
+  });
+
+  // Tema claro/escuro
+  function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.className = savedTheme;
+    updateThemeIcons(savedTheme);
+  }
+
+  themeToggle.addEventListener('click', () => {
+    const currentTheme = document.body.classList.contains('light') ? 'light' : 'dark';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.body.className = newTheme;
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcons(newTheme);
+    lucide.createIcons();
+  });
+
+  function updateThemeIcons(theme) {
+    const lightIcon = document.querySelector('.light-icon');
+    const darkIcon = document.querySelector('.dark-icon');
+    if (theme === 'light') {
+      lightIcon.classList.remove('hidden');
+      darkIcon.classList.add('hidden');
+    } else {
+      lightIcon.classList.add('hidden');
+      darkIcon.classList.remove('hidden');
+    }
+  }
+
+  // Mobile Menu
+  mobileMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+
+  document.querySelectorAll('#mobileMenu a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+    });
+  });
+
+  // Timer Promo
+  function initPromoTimer() {
+    function updateTimer() {
+      const now = new Date();
+      const endOfDay = new Date(now);
+      endOfDay.setHours(23, 59, 59, 999);
+      const diff = endOfDay - now;
+      
+      const hours = Math.floor(diff / 3600000);
+      const minutes = Math.floor((diff % 3600000) / 60000);
+      const seconds = Math.floor((diff % 60000) / 1000);
+      
+      promoTimer.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  }
+
+  // Carrossel Destaques
+  function renderCarousel() {
+    const destaques = menuItems.filter(item => item.destaque);
+    carousel.innerHTML = destaques.map(item => `
+      <div class="carousel-item flex-shrink-0 w-80 card-bg rounded-3xl overflow-hidden shadow-xl card-hover">
+        <div class="relative">
+          <img src="${item.img}" alt="${item.name}" class="w-full h-56 object-cover">
+          <div class="absolute top-4 right-4 px-3 py-1 gradient-bg rounded-full text-white text-xs font-bold">
+            Destaque
+          </div>
+        </div>
+        <div class="p-6">
+          <h4 class="text-xl font-black mb-2">${item.name}</h4>
+          <p class="text-sm opacity-70 mb-4 line-clamp-2">${item.desc}</p>
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-black gradient-text">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+            <button onclick="addToCart(${item.id})" class="px-5 py-2 btn-primary rounded-xl text-white font-bold text-sm">
+              Adicionar
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  prevBtn.addEventListener('click', () => {
+    carousel.scrollBy({left: -320, behavior: 'smooth'});
+  });
+
+  nextBtn.addEventListener('click', () => {
+    carousel.scrollBy({left: 320, behavior: 'smooth'});
+  });
+
+  // Auto-scroll carrossel
+  setInterval(() => {
+    if (carousel.scrollLeft >= carousel.scrollWidth - carousel.clientWidth - 10) {
+      carousel.scrollTo({left: 0, behavior: 'smooth'});
+    } else {
+      carousel.scrollBy({left: 320, behavior: 'smooth'});
+    }
+  }, 5000);
+
+  // Renderizar cardápio
+  function renderMenu() {
+    const filtered = menuItems.filter(item => {
+      const matchCategory = currentCategory === 'todos' || item.category === currentCategory;
+      const matchSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                         item.desc.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchCategory && matchSearch;
+    });
+
+    if (filtered.length === 0) {
+      menuGrid.innerHTML = '';
+      document.getElementById('noResults').classList.remove('hidden');
+    } else {
+      document.getElementById('noResults').classList.add('hidden');
+      menuGrid.innerHTML = filtered.map(item => `
+        <div class="card-bg rounded-3xl overflow-hidden shadow-lg card-hover scroll-reveal">
+          <div class="relative">
+            <img src="${item.img}" alt="${item.name}" class="w-full h-48 object-cover">
+            ${item.destaque ? '<div class="absolute top-3 left-3 px-3 py-1 gradient-bg-secondary rounded-full text-white text-xs font-bold">Popular</div>' : ''}
+          </div>
+          <div class="p-5">
+            <h4 class="text-lg font-black mb-2">${item.name}</h4>
+            <p class="text-sm opacity-70 mb-4 line-clamp-2">${item.desc}</p>
+            <div class="flex items-center justify-between">
+              <span class="text-2xl font-black gradient-text">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+              <button onclick="addToCart(${item.id})" class="w-10 h-10 btn-primary rounded-xl text-white flex items-center justify-center">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+      initScrollReveal();
+    }
+  }
+
+  // Busca
+  searchInput.addEventListener('input', (e) => {
+    searchTerm = e.target.value;
+    renderMenu();
+  });
+
+  // Filtro categoria
+  categoryBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      categoryBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentCategory = btn.dataset.category;
+      renderMenu();
+    });
+  });
+
+  // Carrinho
+  window.addToCart = function(id) {
+    const item = menuItems.find(i => i.id === id);
+    const existingItem = cart.find(i => i.id === id);
+    
+    if (existingItem) {
+      existingItem.quantity++;
+    } else {
+      cart.push({...item, quantity: 1});
+    }
+    
+    saveCart();
+    updateCartUI();
+    showToast(item.name);
+  }
+
+  window.updateQuantity = function(id, delta) {
+    const item = cart.find(i => i.id === id);
+    if (item) {
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        cart = cart.filter(i => i.id !== id);
+      }
+      saveCart();
+      updateCartUI();
+    }
+  }
+
+  window.removeFromCart = function(id) {
+    cart = cart.filter(i => i.id !== id);
+    saveCart();
+    updateCartUI();
+  }
+
+  function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  function updateCartUI() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+    if (totalItems > 0) {
+      cartCount.textContent = totalItems;
+      cartCount.classList.remove('hidden');
+    } else {
+      cartCount.classList.add('hidden');
+    }
+
+    if (cart.length === 0) {
+      cartItems.innerHTML = '';
+      emptyCart.classList.remove('hidden');
+      cartFooter.classList.add('hidden');
+    } else {
+      emptyCart.classList.add('hidden');
+      cartFooter.classList.remove('hidden');
+      cartItems.innerHTML = cart.map(item => `
+        <div class="flex gap-3 card-bg p-3 rounded-2xl">
+          <img src="${item.img}" alt="${item.name}" class="w-20 h-20 rounded-xl object-cover">
+          <div class="flex-1">
+            <h5 class="font-bold text-sm mb-1">${item.name}</h5>
+            <div class="text-lg font-black gradient-text mb-2">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</div>
+            <div class="flex items-center gap-2">
+              <button onclick="updateQuantity(${item.id}, -1)" class="w-7 h-7 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center hover:bg-[#FF6B00] hover:text-white transition-colors">
+                <i data-lucide="minus" class="w-4 h-4"></i>
+              </button>
+              <span class="font-bold w-8 text-center">${item.quantity}</span>
+              <button onclick="updateQuantity(${item.id}, 1)" class="w-7 h-7 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center hover:bg-[#FF6B00] hover:text-white transition-colors">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+              </button>
+              <button onclick="removeFromCart(${item.id})" class="ml-auto w-7 h-7 rounded-lg bg-red-100 dark:bg-red-900/30 text-[#E63946] flex items-center justify-center hover:bg-[#E63946] hover:text-white transition-colors">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    subtotal.textContent = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+    total.textContent = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+  }
+
+  // Abrir/Fechar Carrinho
+  cartBtn.addEventListener('click', () => {
+    cartSidebar.classList.remove('translate-x-full');
+    cartOverlay.classList.remove('hidden');
+  });
+
+  closeCart.addEventListener('click', () => {
+    cartSidebar.classList.add('translate-x-full');
+    cartOverlay.classList.add('hidden');
+  });
+
+  cartOverlay.addEventListener('click', () => {
+    cartSidebar.classList.add('translate-x-full');
+    cartOverlay.classList.add('hidden');
+  });
+
+  // Checkout WhatsApp
+  checkoutBtn.addEventListener('click', () => {
+    if (cart.length === 0) return;
+    
+    let message = "🍔 *NOVO PEDIDO - SOCORRO'S LANCHES* 🍔%0A%0A";
+    message += "*Itens do Pedido:*%0A";
+    
+    cart.forEach(item => {
+      message += `• ${item.quantity}x ${item.name} - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}%0A`;
+    });
+    
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    message += `%0A*Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}*`;
+    
+    if (totalPrice >= 40) {
+      message += "%0A🎉 *Frete Grátis Aplicado!*";
+    }
+    
+    message += "%0A%0A📍 Gostaria de confirmar meu pedido!";
+    
+    window.open(`https://wa.me/5511999999999?text=${message}`, '_blank');
+  });
+
+  // Toast
+  function showToast(itemName) {
+    toastMessage.textContent = `${itemName} adicionado`;
+    toast.classList.remove('translate-y-20', 'opacity-0');
+    toast.classList.add('translate-y-0', 'opacity-100');
+    
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-20', 'opacity-0');
+    }, 3000);
+  }
+
+  // Scroll Reveal
+  function initScrollReveal() {
+    const reveals = document.querySelectorAll('.scroll-reveal');
+    
+    const revealOnScroll = () => {
+      reveals.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < window.innerHeight - elementVisible) {
+          element.classList.add('active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+  }
+
+  // Smooth scroll para âncoras
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        const headerOffset = 100;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+</script>
+</body>
+</html>
